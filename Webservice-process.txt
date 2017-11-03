@@ -1,0 +1,61 @@
+	Procedure for RPC based webservice: (Web based application):
+	
+		Server: 
+			1) Create a web based maven application
+				using archetypeArtifiactId=maven-archetype-webapp
+			2) Annotate the webservice class with 
+				@Webservice and @SOAPBinding(style=Document)
+			3) Build the maven application and deploy it to an application server.
+			4) Access the url: 
+				localhost:<portnumber>\<artifactId>\<servicename>?wsdl
+		Client:
+			1) Create a standalone maven application
+				using archetypeArtifactId=maven-archetype-quickstart
+			2) From the command prompt create service stub classes
+				wsimport -keep localhost:<portnumber>\<artifactId>\<servicename>?wsdl
+			3) Place the generated service classes in a package under src folder.
+			4) Create a client class to acces the service operation methods
+					ServiceClass.portName.opeationName()
+
+
+	Procedure for RPC based webservice: (Web based application):
+	
+		Server: 
+		    1) Create a standalone maven application
+				using archetypeArtifiactId=maven-archetype-quickstart
+			2) Annotate the webservice class with
+				@WebService and @SOAPBinding(style=RPC)
+			3) Create a main class and publish the webservice class with a url to Endpoint.
+				EndPoint.publish(“http://localhost:9999/<artifactId>”, new <WebService>()) 	
+				Note that user define port should start with number 9. Port with 8xxx is reserved.
+			4) Execute the class to publish the websevice.
+				If you get error: wrapper class … is not found. Have you run apt to generate them?
+				Check the post: http://www.mkyong.com/webservices/jax-ws/
+				wrapper-class-package-jaxws-methodname-is-not-found-have-you-run-apt-to-generate-them/
+
+		Client:
+			1) Create a standalone maven application
+				using archetypeArtifiactId=maven-archetype-quickstart
+			2) From the command prompt create service stub classes
+				wsimport -keep localhost:<portnumber>\<artifactId>?wsdl
+			3) Place the generated service classes in a package under src folder.
+			4) Do the following to consume the service:
+				URL url = new URL(localhost:<portnumber>\<artifactId>?wsdl)
+				QName qName = new Qname(<namespace>, <servicename>)
+				Service service = Service.create(url, qName);
+			If you get the error: two classes have same XML type name...
+				change the name value to a new value in  @xmlType(name) 
+				for the service stub classes.
+
+		
+		To capture the http traffic:
+			I use membrane monitor https://www.membrane-soa.org/soap-monitor/ 
+				1) In the client application, say the port number is 9999.
+					change it to a different number. Say 9191.
+				2) In membrane monitor, add a new proxy with 
+					simple service proxy
+					listening port: 9191
+					Host: localhost
+					Port: 9999
+			With this setup, when you execute the client program,
+					the http traffic will appear.
