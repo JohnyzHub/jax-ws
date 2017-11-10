@@ -2,20 +2,21 @@ Procedure for RPC based webservice: (Web based application):
 	
 	Server: 
 		1) Create a web based maven application
-		using archetypeArtifiactId=maven-archetype-webapp
+			using archetypeArtifiactId=maven-archetype-webapp
 		2) Annotate the webservice class with 
-		@Webservice and @SOAPBinding(style=Rpc)
+			@Webservice and @SOAPBinding(style=Rpc)
 		3) Build the maven application and deploy it to an application server.
 		4) Access the url: 
-		localhost:<portnumber>\<artifactId>\<servicename>?wsdl
+			localhost:<portnumber>\<artifactId>\<servicename>?wsdl
+	
 	Client:
 		1) Create a standalone maven application
-		using archetypeArtifactId=maven-archetype-quickstart
+			using archetypeArtifactId=maven-archetype-quickstart
 		2) From the command prompt create service stub classes
-		wsimport -keep localhost:<portnumber>\<artifactId>\<servicename>?wsdl
+			wsimport -keep localhost:<portnumber>\<artifactId>\<servicename>?wsdl
 		3) Place the generated service classes in a package under src folder.
 		4) Create a client class to acces the service operation methods
-		ServiceClass.portName.opeationName()
+			ServiceClass.portName.opeationName()
 
 
 Procedure for Document based webservice:(Standalone):
@@ -31,7 +32,7 @@ Procedure for Document based webservice:(Standalone):
 		4) Execute the class to publish the websevice.
 				If you get error: wrapper class … is not found. Have you run apt to generate them?
 				Check the post: 
-					http://www.mkyong.com/webservices/jax-ws/wrapper-class-package-jaxws-					methodname-is-not-found-have-you-run-apt-to-generate-them/
+http://www.mkyong.com/webservices/jax-ws/wrapper-class-package-jaxws-methodname-is-not-found-have-you-run-apt-to-generate-them/
 
 	Client:
 		1) Create a standalone maven application
